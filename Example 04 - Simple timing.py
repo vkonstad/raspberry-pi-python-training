@@ -15,4 +15,4 @@ print(sumTo(sys.argv[1]))
 
 stop = time.time()
 
-print("The time of execution of above program is :", (stop-start) * 10**3, "ms")
+print("The time of execution of above program is :", round((stop-start) * 10**3, 1), "ms")

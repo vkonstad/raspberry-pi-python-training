@@ -13,7 +13,7 @@ def worker2(arg):
         time.sleep(1.75)
 
 
-logging.basicConfig(level=logging.INFO, format="%(message)s")
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 parameters = {"stop": False}
 thread = threading.Thread(target=worker1, args=(parameters,))
 thread_two = threading.Thread(target=worker2, args=(parameters,))
@@ -26,7 +26,8 @@ while True:
         time.sleep(5)
     except KeyboardInterrupt:
         parameters["stop"] = True
-        logging.info('Stopping')
+        logging.warning('Stopping')
         break
 thread.join()
 thread_two.join()
+logging.warning('ALL Stopped')
