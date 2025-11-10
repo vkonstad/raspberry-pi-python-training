@@ -8,7 +8,7 @@ sum = 0
 
 for i in sys.argv:
     try:
-        print('\nArgument ', i)
+        print('Argument ', i)
         sum += int(i)
     except:
         pass
