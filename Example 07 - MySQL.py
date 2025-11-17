@@ -63,4 +63,3 @@ print(result_dataFrame)
 
 # Closing Database Connection 
 db_connection.close()
-
