@@ -38,7 +38,7 @@ db_connection.commit()
 
 # mycursor.execute("SELECT * from Sensor order by temperature DESC limit 1")
 # result = mycursor.fetchall()
-# print('LAST result', result)
+# print('BIGGEST temperature', result)
 # print('')
 
 # mycursor.execute("SELECT * from Sensor where temperature > 25")
