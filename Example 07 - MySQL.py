@@ -1,65 +1,29 @@
-import pymysql, random
+import pymysql
+import random
 from datetime import datetime
-import pandas
 
 try:
     db_connection = pymysql.connect(host='tpalley.mooo.com', user='labuser', password='labuser123&', database='EmbeddedLab')
-    print("Connected")
+    print("Connected to database")
+
+    with db_connection.cursor() as cursor:
+        create_table_sql = "CREATE TABLE IF NOT EXISTS Sensor (id INT AUTO_INCREMENT PRIMARY KEY, timestamp DATETIME, temperature FLOAT)"
+        cursor.execute(create_table_sql)
+        temp_val = random.uniform(30.0, 35.0) 
+        current_time = datetime.now()
+        insert_sql = "INSERT INTO Sensor (timestamp, temperature) VALUES (%s, %s)"
+        cursor.execute(insert_sql, (current_time, temp_val))
+
+    db_connection.commit()
+    print(f"Data inserted: Temp={temp_val:.2f} at {current_time}")
+
+except pymysql.MySQLError as e:
+    print(f"Database Error: {e}")
+    if 'db_connection' in locals() and db_connection.open: 
+	    db_connection.rollback()
 except Exception as e:
-    print("Can't connect to database")
-    print(e)
-    exit()
-
-mycursor = db_connection.cursor()
-mycursor.execute("SHOW TABLES LIKE 'Sensor'")
-result = mycursor.fetchone()
-if result: pass
-else: mycursor.execute("CREATE TABLE Sensor (timestamp datetime, temperature float)")
-
-tDate = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-mycursor.execute("INSERT INTO Sensor (timestamp, temperature) VALUES (%s, %s)", (tDate, str(random.randint(30,35))))
-db_connection.commit()
-
-# mycursor.execute("SELECT * from Sensor")
-# result = mycursor.fetchall()
-# print('Last measurement is:', result[-1])
-# print('Number of measurements: ', len(result))
-# print('')
-
-# mycursor.execute("SELECT * from Sensor order by timestamp ASC limit 1")
-# result = mycursor.fetchall()
-# print('FIRST result', result)
-# print('')
-
-# mycursor.execute("SELECT * from Sensor order by timestamp DESC limit 1")
-# result = mycursor.fetchall()
-# print('LAST result', result)
-# print('')
-
-# mycursor.execute("SELECT * from Sensor order by temperature DESC limit 1")
-# result = mycursor.fetchall()
-# print('BIGGEST temperature', result)
-# print('')
-
-# mycursor.execute("SELECT * from Sensor where temperature > 25")
-# result = mycursor.fetchall()
-# df = pandas.DataFrame(result)
-# print (df)
-# print('')
-
-# mycursor.execute("SELECT AVG(temperature) from Sensor")
-# result = mycursor.fetchall()
-# print('AVERAGE result', result)
-# print('')
-
-# mycursor.execute("SELECT * from Sensor")
-# result = mycursor.fetchall()
-# df = pandas.DataFrame(result)
-# print ('DF mean value ', df[1].mean())
-# print('')
-
-result_dataFrame = pandas.read_sql("SELECT * from Sensor", db_connection)
-print(result_dataFrame)
-
-# Closing Database Connection 
-db_connection.close()
+    print(f"General Error: {e}")
+finally:
+    if 'db_connection' in locals() and db_connection.open:
+        db_connection.close()
+        print("Connection closed")
