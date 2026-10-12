@@ -1,0 +1,12 @@
+# Install inside a virtual environment:
+#   python -m venv .venv
+#   .venv\Scripts\activate        (Windows)   |   source .venv/bin/activate   (Linux / Raspberry Pi)
+#   pip install -r requirements.txt
+pandas
+numpy
+matplotlib
+pymysql
+cryptography    # needed by pymysql for MySQL 8 authentication
+streamlit
+guizero
+# RPi.GPIO is only needed for the hardware examples, on the Raspberry Pi:  pip install RPi.GPIO

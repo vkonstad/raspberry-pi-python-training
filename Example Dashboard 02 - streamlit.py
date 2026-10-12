@@ -4,12 +4,7 @@ import pandas as pd
 import random
 from datetime import datetime
 
-DB_CONFIG = {
-    'host': 'localhost',
-    'user': 'localuser',
-    'password': 'localuser124!',
-    'database': 'exampledb'
-}
+from db_config import DB_CONFIG   # connection settings, see db_config.py
 
 def get_connection():
     return pymysql.connect(**DB_CONFIG)
@@ -44,7 +39,8 @@ def fetch_data():
     conn = get_connection()
     try:
         return pd.read_sql("SELECT timestamp, temperature FROM measurements ORDER BY timestamp ASC", conn)
-    except:
+    except pymysql.MySQLError as e:
+        st.error(f"Database error: {e}")
         return pd.DataFrame()
     finally:
         conn.close()
