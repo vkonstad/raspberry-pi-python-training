@@ -2,6 +2,8 @@ Some entry-level examples towards understanding python, with raspberry pi as a t
 
 Static IP settings on raspberry pi included (`static on pi.txt`).
 
+New to Linux? See the one-page `Linux cheat sheet.md` (SSH, files, permissions, packages, systemd, network).
+
 ## Setup
 
 ```
