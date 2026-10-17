@@ -3,6 +3,7 @@ Some entry-level examples towards understanding python, with raspberry pi as a t
 Static IP settings on raspberry pi included (`static on pi.txt`).
 
 New to Linux? See the one-page `Linux cheat sheet.md` (SSH, files, permissions, packages, systemd, network).
+When you are ready, `Linux lab.md` is a 30 minute hands-on exercise (apt, htop, stress-ng) done entirely in the console.
 
 ## Setup
 
