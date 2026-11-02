@@ -34,24 +34,3 @@ print("Humidity or 0 if missing:", reading.get("humidity", 0))
 
 for key, value in reading.items():
     print(f"  {key:<12} = {value}")
-
-print()
-
-# The two combined: a list of dictionaries is how most real data looks (rows of a table)
-readings = [
-    {"sensor": "living_room", "temperature": 22.5},
-    {"sensor": "kitchen", "temperature": 25.1},
-    {"sensor": "garage", "temperature": 17.3},
-    {"sensor": "kitchen", "temperature": 24.7},
-]
-
-# Group the temperatures by sensor
-by_sensor = {}
-for r in readings:
-    by_sensor.setdefault(r["sensor"], []).append(r["temperature"])
-
-for sensor, values in by_sensor.items():
-    print(f"{sensor:<12} {len(values)} reading(s), average {sum(values) / len(values):.1f}")
-
-hottest = max(readings, key=lambda r: r["temperature"])
-print("Hottest reading:", hottest)
