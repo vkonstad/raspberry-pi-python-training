@@ -31,6 +31,7 @@ pip install -r requirements.txt
 | 09 | `Example 09 - Pandas.py` | vectorized vs row-by-row processing |
 | 10 | `Example 10 - MySQL.py` | databases (needs a local MySQL, below) |
 | 11 | `Example 11a/11b - Socket ...` | TCP client / server |
+| 12 | `Example 12 - CPU Temperature to SQLite.py` | SQLite, runs on the Pi only; used by the cron / systemd tasks of the Linux lab |
 
 ## MySQL for example 10 and the streamlit dashboard
 

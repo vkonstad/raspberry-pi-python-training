@@ -3,7 +3,7 @@
 # break each other (and your system Python). That is what a virtual environment (venv) is.
 #
 # Create and activate one, in the project folder:
-#   ex
+#   python -m venv .venv
 #   .venv\Scripts\activate               (Windows)
 #   source .venv/bin/activate            (Linux / Raspberry Pi)
 # Install the packages of this project, and leave the venv when done:
