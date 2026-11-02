@@ -1,0 +1,26 @@
+# MariaDB for the database examples (Example 10 and the streamlit dashboard).
+# Start:  docker compose up -d        Stop:  docker compose down
+# The database, user and password below match the defaults of db_config.py (lab use only!).
+
+services:
+  mariadb:
+    image: mariadb:11
+    container_name: embedded-lab-db
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpass
+      MARIADB_DATABASE: EmbeddedLab
+      MARIADB_USER: labuser
+      MARIADB_PASSWORD: labpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb-data:/var/lib/mysql     # keeps your data when the container is recreated
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  mariadb-data:

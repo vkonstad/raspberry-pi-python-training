@@ -1,5 +1,5 @@
-# Shared MySQL connection settings for the database examples.
-# Defaults match a local MySQL set up with mysql_setup.sql.
+# Shared MySQL/MariaDB connection settings for the database examples.
+# Defaults match the MariaDB container of docker-compose.yml (docker compose up -d).
 # Override them with environment variables, never put real passwords in the code:
 #   Windows (PowerShell):  $env:DB_HOST = "192.168.1.50"
 #   Linux / Raspberry Pi:  export DB_HOST=192.168.1.50

@@ -1,6 +1,6 @@
 # Example 10 - MySQL
 # Inserts one random "sensor" reading into a table of a local MySQL database.
-# Install MySQL and run mysql_setup.sql first (see README). Connection settings: db_config.py
+# Start the MariaDB container first: docker compose up -d (see README). Connection settings: db_config.py
 #
 # Concepts: database connection, SQL, parameterized queries, commit/rollback, error handling
 

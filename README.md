@@ -29,18 +29,38 @@ pip install -r requirements.txt
 | 07 | `Example 07 - Simple timing.py` | functions, measuring time |
 | 08 | `Example 08 - Simple Threading.py` | threads |
 | 09 | `Example 09 - Pandas.py` | vectorized vs row-by-row processing |
-| 10 | `Example 10 - MySQL.py` | databases (needs a local MySQL, below) |
+| 10 | `Example 10 - MySQL.py` | databases (needs the MariaDB container, below) |
 | 11 | `Example 11a/11b - Socket ...` | TCP client / server |
 | 12 | `Example 12 - CPU Temperature to SQLite.py` | SQLite, runs on the Pi only; used by the cron / systemd tasks of the Linux lab |
 
-## MySQL for example 10 and the streamlit dashboard
+## MariaDB (in Docker) for example 10 and the streamlit dashboard
 
-Install MySQL (or MariaDB) on your machine, then create the lab database and user:
+The database runs in a ready-made container, so nothing is installed on your machine except Docker
+(Docker Desktop on Windows/macOS, or `docker.io` / Docker Engine on Linux).
+
+Start it, from the folder of this repository:
 
 ```
-mysql -u root -p < mysql_setup.sql
+docker compose up -d
 ```
 
-Connection settings live in `db_config.py` and can be overridden with the environment
-variables `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`.
-Do not commit real passwords to the repository.
+The first start downloads the image and creates the database `EmbeddedLab` with the user `labuser`
+(see `docker-compose.yml`). Check that it is running and healthy:
+
+```
+docker compose ps
+```
+
+Useful commands:
+
+```
+docker compose logs mariadb                                        # what the database says
+docker exec -it embedded-lab-db mariadb -ulabuser -plabpass EmbeddedLab   # SQL console, try: SHOW TABLES; SELECT * FROM Sensor;
+docker compose down                                                # stop it (your data is kept)
+docker compose down -v                                             # stop it and delete the data
+```
+
+Connection settings live in `db_config.py`, the defaults match the container
+(`localhost`, port `3306`, `labuser`, `labpass`, `EmbeddedLab`). Override them with the environment
+variables `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, e.g. to connect to a database on another machine.
+The passwords in `docker-compose.yml` are for this lab only. Do not commit real passwords to the repository.
