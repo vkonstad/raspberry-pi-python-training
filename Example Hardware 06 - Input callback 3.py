@@ -29,8 +29,9 @@ signal.signal(signal.SIGINT, signal_handler)
 
 while True:
     if should_blink:
-        GPIO.output(LED_GPIO, GPIO.HIGH) 
+        GPIO.output(LED_GPIO, GPIO.HIGH)
     time.sleep(0.5)
-    if should_blink:
-        GPIO.output(LED_GPIO, GPIO.LOW)  
+    # always turn the LED off here: if blinking was switched off during the
+    # half second above, the LED must not stay on
+    GPIO.output(LED_GPIO, GPIO.LOW)
     time.sleep(0.5)
