@@ -1,0 +1,28 @@
+Example 10 - MySQL on Raspberry Pi (64-bit) with MariaDB in Docker
+==================================================================
+
+# 1. Install Docker
+curl -fsSL https://get.docker.com | sh
+
+# 2. Download and start MariaDB (credentials match db_config.py defaults)
+sudo docker run -d --name mariadb -p 3306:3306 \
+  -e MARIADB_ROOT_PASSWORD=rootpass \
+  -e MARIADB_DATABASE=EmbeddedLab \
+  -e MARIADB_USER=labuser \
+  -e MARIADB_PASSWORD=labpass \
+  mariadb
+
+# 3. Check it is running (wait for "ready for connections")
+sudo docker ps
+sudo docker logs mariadb
+
+# 4. Install the Python MySQL driver
+sudo apt install python3-pymysql
+
+# 5. Run the script (db_config.py must be in the same folder)
+python3 "Example 10 - MySQL.py"
+
+# Useful commands
+sudo docker stop mariadb     # stop the database
+sudo docker start mariadb    # start it again
+sudo docker rm -f mariadb    # delete the container (data is lost)

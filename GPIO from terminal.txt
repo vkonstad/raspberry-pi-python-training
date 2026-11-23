@@ -1,0 +1,29 @@
+# Handling GPIO from the terminal (no Python needed)
+# Examples use GPIO20 for an LED and GPIO16 for a button, as in the callback examples.
+# Which tool exists depends on the Raspberry Pi OS version: try the first, then the second.
+# A pin set from the terminal keeps its state until you change it.
+
+# --- See the board ---
+pinout                                # drawing of the header with the pin names (part of gpiozero)
+
+# --- pinctrl (Raspberry Pi OS Bookworm and newer) ---
+pinctrl get 16                        # read one pin: its function (ip/op), pull and level (hi/lo)
+pinctrl set 20 op dh                  # GPIO20 as output, driven high (LED on)
+pinctrl set 20 dl                     # drive low (LED off)
+pinctrl set 16 ip pu                  # GPIO16 as input with a pull-up
+pinctrl get 16                        # press the button and run it again: the level changes
+pinctrl set 20 ip                     # give the pin back (input, nothing driven)
+
+# --- raspi-gpio (older Raspberry Pi OS, replaced by pinctrl) ---
+raspi-gpio get 16                     # read one pin
+raspi-gpio set 20 op dh               # GPIO20 as output, high
+raspi-gpio set 20 dl                  # low
+raspi-gpio set 16 ip pu               # GPIO16 as input with a pull-up
+
+# --- A one-liner with gpiozero (the pin is released when Python exits) ---
+python3 -c "from gpiozero import LED; from time import sleep; LED(20).on(); sleep(3)"    # LED on for 3 seconds
+
+# --- Good to know ---
+# Two programs must not use the same pin at the same time (error "GPIO busy" or strange behaviour).
+# If a pin seems stuck after a crashed script, give it back:  pinctrl set 20 ip
+# Run "<command> --help" (or "man pinctrl") to see everything a tool can do.
