@@ -2,10 +2,10 @@ import time
 import RPi.GPIO as GPIO
 
 # Pin definitions
-led_pin = 12
+led_pin = 32
 
-# Use "GPIO" pin numbering
-GPIO.setmode(GPIO.BCM)
+# Use physical "BOARD" pin numbering
+GPIO.setmode(GPIO.BOARD)
 
 # Set LED pin as output
 GPIO.setup(led_pin, GPIO.OUT)
